@@ -1,0 +1,63 @@
+group 'com.example.shiku_flutter'
+version '1.0'
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+//        jackOptions {
+//            enabled true
+//        }
+        minSdkVersion 16
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+//    testImplementation 'junit:junit:4.12'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    // 1.1.0会导致安卓5上webview崩溃，https://stackoverflow.com/a/58131421
+    // 准确说是低版本webView的bug，普遍存在国产安卓5上，
+    //noinspection GradleDependency
+    implementation files('libs/fastjson-1.2.40.jar')
+    implementation files('libs/ormlite-android-4.48.jar')
+    implementation files('libs/ormlite-core-4.48.jar')
+
+    implementation 'de.greenrobot:eventbus:3.0.0-beta1'
+    implementation 'com.squareup.okhttp3:okhttp:3.2.0'
+
+
+    // bugly上报，没配置自动上传mapping，因为测试时自动上传mapping失败，
+    implementation 'com.tencent.bugly:crashreport:2.6.6'
+
+    // 密码学库，加密算法用到，
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.57'
+}
